@@ -5,5 +5,10 @@ CREATE DATABASE vet_clinic;
 \c vet_clinic;
 
 CREATE TABLE animals (
-    name varchar(100)
+    id INT,
+    name VARCHAR,
+    date_of_birth DATE,
+    escape_attempts INT, 
+    neutered BOOLEAN,
+    weight_kg FLOAT
 );
