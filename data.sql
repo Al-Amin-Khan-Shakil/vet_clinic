@@ -33,3 +33,21 @@ VALUES
   ('Melody Pond', 77),
   ('Dean Winchester', 14),
   ('Jodie Whittaker', 38);
+
+UPDATE animals
+SET
+  species_id = (
+    SELECT id
+    FROM species
+    WHERE species.name = 'Digimon'
+  )
+WHERE animals.name LIKE '%mon';
+
+UPDATE animals
+SET
+  species_id = (
+    SELECT id
+    FROM species
+    WHERE species.name = 'Pokemon'
+  )
+WHERE species_id IS NULL;
