@@ -38,6 +38,73 @@ SELECT COUNT(*) FROM animals;
 SELECT COUNT(escape_attempts) FROM animals WHERE escape_attempts = 0;
 SELECT AVG(weight_kg) FROM animals;
 SELECT neutered, MAX(escape_attempts) AS max_escape_attempts FROM animals GROUP BY neutered;
-SELECT species, MIN(weight_kg) AS minimum_weight, MAX(weight_kg) AS maximum_weight FROM a
-nimals GROUP BY species;
+SELECT species, MIN(weight_kg) AS minimum_weight, MAX(weight_kg) AS maximum_weight FROM animals GROUP BY species;
 SELECT species, AVG(escape_attempts) AS average_escape_attempts FROM animals WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31' GROUP BY species;
+
+SELECT
+  name AS animal_name,
+  full_name AS owner_name
+FROM animals
+INNER JOIN owners
+ON owner_id = owners.id
+WHERE owners.full_name = 'Melody Pond';
+SELECT
+  species.name AS species,
+  animals.name AS animal_name
+FROM species
+INNER JOIN animals
+ON species.id = animals.species_id
+WHERE species.name = 'Pokemon';
+SELECT
+  full_name AS owners_name,
+  animals.name AS ainmals_name
+FROM owners
+LEFT JOIN animals
+ON owners.id = animals.owner_id;
+SELECT
+  species.name AS species_name,
+  COUNT(animals.name) AS number_of_animals
+FROM species
+INNER JOIN animals
+ON species.id = animals.species_id
+GROUP BY species.name;
+SELECT
+  animals.name AS ainmal_name,
+  species.name AS species_name,
+  owners.full_name
+FROM animals
+INNER JOIN owners
+ON owner_id = owners.id
+INNER JOIN species
+ON species_id = species.id
+GROUP BY
+  species.name,
+  animals.name,
+  owners.full_name
+HAVING
+  species.name = 'Digimon'
+  AND
+  owners.full_name = 'Jennifer Orwell';
+SELECT
+  animals.name AS ainmal_name,
+  escape_attempts,
+  owners.full_name
+FROM animals
+INNER JOIN owners
+ON owner_id = owners.id
+GROUP BY
+  animals.name,
+  escape_attempts,
+  owners.full_name
+HAVING
+  escape_attempts = 0
+  AND
+  owners.full_name = 'Dean Winchester';
+SELECT
+  full_name ,
+  COUNT(name) AS animal_count
+FROM owners
+INNER JOIN animals
+ON owners.id = owner_id
+GROUP BY full_name
+ORDER BY animal_count DESC;
