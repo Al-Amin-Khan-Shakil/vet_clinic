@@ -108,3 +108,105 @@ INNER JOIN animals
 ON owners.id = owner_id
 GROUP BY full_name
 ORDER BY animal_count DESC;
+SELECT
+  vets.name AS vets_name,
+  animals.name AS animal_name,
+  visit_date
+FROM visits
+INNER JOIN vets
+ON vets_id = vets.id
+INNER JOIN animals
+ON animal_id = animals.id
+WHERE vets.name = 'William Tatcher'
+ORDER BY visit_date DESC;
+SELECT
+  vets.name AS vets_name,
+  COUNT(animals.name) AS animal_number
+FROM visits
+INNER JOIN vets
+ON vets_id = vets.id
+INNER JOIN animals
+ON animal_id = animals.id
+GROUP BY vets.name
+HAVING vets.name = 'Stephanie Mendez';
+SELECT
+  vets.name AS vets_name,
+  species.name AS specialties
+FROM vets
+LEFT JOIN specializations
+ON vets.id = vets_id
+LEFT JOIN species
+ON species.id = species_id;
+SELECT
+  vets.name AS vets_name,
+  animals.name AS animal_name,
+  visit_date
+FROM visits
+INNER JOIN vets
+ON vets_id = vets.id
+INNER JOIN animals
+ON animal_id = animals.id
+WHERE vets.name = 'Stephanie Mendez'
+AND visit_date
+BETWEEN '2020-04-01' AND '2020-08-30';
+SELECT
+  animals.name,
+  COUNT(visit_date)
+FROM visits
+INNER JOIN animals
+ON animal_id = animals.id
+GROUP BY animals.name
+ORDER BY COUNT(visit_date) DESC
+FETCH FIRST 1 ROW ONLY;
+SELECT
+  vets.name AS vets_name,
+  animals.name AS animal_name,
+  visit_date
+FROM visits
+INNER JOIN animals
+ON animal_id = animals.id
+INNER JOIN vets
+ON vets_id = vets.id
+WHERE vets.name = 'Maisy Smith'
+ORDER BY visit_date
+FETCH FIRST 1 ROW ONLY;
+SELECT
+  animals.name AS animal_name,
+  species.name AS species_name,
+  vets.name AS vets_name,
+  vets.age AS vets_age,
+  vets.date_of_graduation AS vet_date_of_graduation,
+  visit_date
+FROM visits
+INNER JOIN vets
+ON visits.vets_id = vets.id
+INNER JOIN animals
+ON visits.animal_id = animals.id
+INNER JOIN species
+ON species.id = animals.species_id
+ORDER BY visit_date DESC
+FETCH FIRST 1 ROW ONLY;
+SELECT COUNT(*)
+FROM visits
+JOIN vets
+ON visits.vets_id = vets.id
+JOIN animals
+ON visits.animal_id = animals.id
+LEFT JOIN specializations
+ON vets.id = specializations.vets_id
+AND animals.species_id = specializations.species_id
+WHERE specializations.vets_id IS NULL;
+SELECT
+  COUNT(*) AS visit_count,
+  species.name AS recommended_speciality
+FROM visits
+JOIN vets
+ON visits.vets_id = vets.id
+JOIN animals
+ON visits.animal_id = animals.id
+JOIN species
+ON animals.species_id = species.id
+WHERE vets.name = 'Maisy Smith'
+GROUP BY species.name
+ORDER BY visit_count DESC
+FETCH FIRST 1 ROW ONLY;
